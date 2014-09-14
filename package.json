@@ -1,0 +1,28 @@
+{
+  "author": "Sean <swlkr.rbl@gmail.com>",
+  "name": "acid",
+  "description": "SQL ORM",
+  "version": "0.0.1",
+  "homepage": "https://github.com/swlkr/acid",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/swlkr/acid.git"
+  },
+  "main": "lib/",
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "q": "1.0.1",
+    "pg": "3.4.2",
+    "sql": "0.40.0"
+  },
+  "devDependencies": {
+    "jshint": "*",
+    "mocha": "*",
+    "should": "*"
+  }
+}
