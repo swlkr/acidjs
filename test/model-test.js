@@ -40,7 +40,7 @@ describe('Model', function() {
 
     after(function() {
       return acid.Query('drop table users;');
-    })
+    });
 
     it('should save a record to the database', function() {
       var User = acid.Model('users', ['id', 'email']);
