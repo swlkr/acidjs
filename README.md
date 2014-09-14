@@ -21,7 +21,6 @@ var acid = require('acid')({
 # Create a table
 $ psql -c "create table users (id serial primary key, email text not null);"
 ```
-
 ```js
 // Define a model
 var User = acid.Model(
@@ -53,8 +52,9 @@ user.save()
 ## Tests
 
 ```bash
-psql -c "create user postgres createdb;"
-psql -c "create database postgres;"
-psql -c "create database acidjs;" -U postgres
-make test
+# Set up the database
+$ psql -c "create user postgres createdb;"
+$ psql -c "create database postgres;"
+$ psql -c "create database acidjs;" -U postgres
+$ make test
 ```
