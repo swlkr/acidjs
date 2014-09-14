@@ -3,7 +3,7 @@ _A minimal postgres ORM for nodejs_
 
 Built on top of [pg](https://github.com/brianc/node-postgres) and [node-sql](https://github.com/brianc/node-sql)
 
-![Build Status](https://travis-ci.org/swlkr/acid.svg?branch=master)
+[![Build Status](https://travis-ci.org/swlkr/acid.svg?branch=master)](https://travis-ci.org/swlkr/acid)
 
 ## Examples
 
