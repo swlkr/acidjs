@@ -1,4 +1,5 @@
-var should = require('should'),
+var chai = require('chai'),
+    expect = chai.expect,
     acid = require('../lib/acid')({
       host: 'localhost',
       user: 'postgres',
@@ -15,7 +16,7 @@ describe('acid', function() {
 
     it('should return a function', function() {
       var type = typeof(model);
-      type.should.equal('function');
+      expect(type).to.equal('function');
     });
   });
 });
