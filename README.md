@@ -1,5 +1,5 @@
 # Acid
-_An unbelievably simple postgres ORM for nodejs_
+_A minimal postgres ORM for nodejs_
 
 Built on top of [pg](https://github.com/brianc/node-postgres) and [node-sql](https://github.com/brianc/node-sql)
 
@@ -15,7 +15,13 @@ var acid = require('acid')({
   password: '',
   database: 'acidjs'
 });
+```
+```bash
+# Create a table
+$ psql -c "create table users (id serial primary key, email text not null);"
+```
 
+```js
 // Define a model
 var User = acid.Model(
   'Users',
@@ -29,10 +35,21 @@ var User = acid.Model(
 var user = new User({
   email: 'test@example.com'
 });
-user.save();
+user.save()
+.then(function(result) {
+  /*
+  result = {
+    id: FB2D5E27-23CE-4CB2-9274-91D3845B85D0,
+    email: 'test@example.com'
+  }
+  */
+})
+.fail(function(error) {
+  console.log(error);
+})
 ```
 
-## Running the tests
+## Tests
 
 ```bash
 psql -c "create user postgres createdb;"
