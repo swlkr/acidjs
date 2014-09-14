@@ -13,7 +13,8 @@ var acid = require('acid')({
   host: 'localhost',
   user: 'postgres',
   password: '',
-  database: 'acidjs'
+  database: 'acidjs',
+  port: 5432
 });
 ```
 ```bash
