@@ -34,11 +34,13 @@ describe('Model', function() {
   });
 
   describe('#save', function() {
-    beforeEach(function() {
-      return acid.Query('drop table users;').then(function() {
-        return acid.Query('create table users (id serial primary key, email text not null);');
-      });
+    before(function() {
+      return acid.Query('create table users (id serial primary key, email text not null);');
     });
+
+    after(function() {
+      return acid.Query('drop table users;');
+    })
 
     it('should save a record to the database', function() {
       var User = acid.Model('users', ['id', 'email']);
