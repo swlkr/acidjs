@@ -25,7 +25,7 @@ $ psql -c "create table users (id serial primary key, email text not null);"
 ```js
 // Define a model
 var User = acid.Model(
-  'Users',
+  'users',
   [
     'id',
     'email'
