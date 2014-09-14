@@ -33,9 +33,8 @@ user.save();
 ## Running the tests
 
 ```bash
-psql template1
-=# CREATE USER postgres WITH PASSWORD 'password' SUPERUSER;
-=# \q
-createdb -U postgres acidjs
+psql -c "create user postgres createdb;"
+psql -c "create database postgres;"
+psql -c "create database acidjs;" -U postgres
 make test
 ```

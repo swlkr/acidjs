@@ -2,7 +2,7 @@ var should = require('should'),
     acid = require('../lib/acid')({
       host: 'localhost',
       user: 'postgres',
-      password: 'password',
+      password: '',
       database: 'acidjs',
       port: 5432
     }),
