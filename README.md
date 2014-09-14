@@ -19,7 +19,7 @@ var acid = require('acid')({
 ```
 ```bash
 # Create a table
-$ psql -c "create table users (id serial primary key, email text not null);"
+$ psql -c "create table users (id bigserial primary key, email text not null, createdAt timestamp without time zone default (now() at time zone 'utc'));"
 ```
 ```js
 // Define a model
@@ -27,7 +27,8 @@ var User = acid.Model(
   'users',
   [
     'id',
-    'email'
+    'email',
+    'createdAt'
   ]
 )
 
@@ -39,8 +40,23 @@ user.save()
 .then(function(result) {
   /*
   result = {
-    id: FB2D5E27-23CE-4CB2-9274-91D3845B85D0,
-    email: 'test@example.com'
+    id: '1',
+    email: 'test@example.com',
+    createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
+  }
+  */
+})
+.fail(function(error) {
+  console.log(error);
+})
+
+// Find a record by primary key (first column name in model definition)
+User.get(1).then(function(result) {
+  /*
+  result = {
+    id: '1',
+    email: 'test@example.com',
+    createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
   }
   */
 })

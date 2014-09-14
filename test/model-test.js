@@ -35,7 +35,7 @@ describe('Model', function() {
 
   describe('#save', function() {
     before(function() {
-      return acid.Query('create table users (id serial primary key, email text not null);');
+      return acid.Query('create table users (id bigserial primary key, email text unique not null);');
     });
 
     after(function() {
@@ -47,5 +47,23 @@ describe('Model', function() {
       var user = new User({email: 'test@test.com'});
       return expect(user.save()).to.eventually.include.keys('id');
     });
+  });
+
+  describe('.get', function() {
+    before(function() {
+      return acid.Query("create table users (id bigserial primary key, email text unique not null, createdAt timestamp without time zone default (now() at time zone 'utc'));").then(function(result) {
+        return acid.Query("insert into users (email) values ('test@test.com')");
+      });
+    });
+
+    after(function() {
+      return acid.Query('drop table users;');
+    });
+
+    it('should get a record from the database', function() {
+      var User = acid.Model('users', ['id', 'email']);
+      expect(User.get(1)).to.eventually.include.keys('email');
+    });
+
   });
 });
