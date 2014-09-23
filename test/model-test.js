@@ -15,19 +15,19 @@ chai.use(chaiAsPromised);
 describe('Model', function() {
   describe('.new', function() {
     it('should return an instance of a model', function() {
-      var User = acid.Model('users', ['id', 'email']);
+      var User = acid.Model('users');
       var user = new User({email: 'hello@example.com'});
       expect(user).to.be.an.instanceof(Model);
     });
 
     it('should create properties', function() {
-      var User = acid.Model('users', ['id', 'email']);
+      var User = acid.Model('users');
       var user = new User({email: 'hello@example.com'});
       expect(user.email).to.equal('hello@example.com');
     });
 
     it('should throw an error when given an incorrect input', function() {
-      var User = acid.Model('users', ['id', 'email']);
+      var User = acid.Model('users');
       var fn = function() { new User(); };
       expect(fn).to.throw('Cannot build a record for table users without an object');
     });
@@ -35,7 +35,7 @@ describe('Model', function() {
 
   describe('#save', function() {
     before(function() {
-      return acid.Query('create table users (id bigserial primary key, email text unique not null);');
+      return acid.Query("create table users (id bigserial primary key, email text unique not null, createdAt timestamp without time zone default (now() at time zone 'utc'));");
     });
 
     after(function() {
@@ -43,7 +43,7 @@ describe('Model', function() {
     });
 
     it('should save a record to the database', function() {
-      var User = acid.Model('users', ['id', 'email']);
+      var User = acid.Model('users');
       var user = new User({email: 'test@test.com'});
       return expect(user.save()).to.eventually.include.keys('id');
     });
@@ -61,7 +61,7 @@ describe('Model', function() {
     });
 
     it('should get a record from the database', function() {
-      var User = acid.Model('users', ['id', 'email']);
+      var User = acid.Model('users');
       expect(User.get(1)).to.eventually.include.keys('email');
     });
 

@@ -16,9 +16,9 @@
     "node": "*"
   },
   "dependencies": {
-    "q": "1.0.1",
     "pg": "3.4.2",
-    "sql": "0.40.0"
+    "q": "1.0.1",
+    "sql-bricks": "CSNW/sql-bricks"
   },
   "devDependencies": {
     "chai": "^1.9.1",
