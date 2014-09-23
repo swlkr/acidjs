@@ -1,7 +1,7 @@
 # Acid
 _A minimal postgres ORM for nodejs_
 
-Built on top of [pg](https://github.com/brianc/node-postgres) and [node-sql](https://github.com/brianc/node-sql)
+Built on top of [pg](https://github.com/brianc/node-postgres) and [sql-bricks](https://github.com/CSNW/sql-bricks)
 
 [![Build Status](https://travis-ci.org/swlkr/acid.svg?branch=master)](https://travis-ci.org/swlkr/acid)
 
@@ -23,19 +23,10 @@ $ psql -c "create table users (id bigserial primary key, email text not null, cr
 ```
 ```js
 // Define a model
-var User = acid.Model(
-  'users',
-  [
-    'id',
-    'email',
-    'createdAt'
-  ]
-)
+var User = acid.Model('users');
 
 // Insert a record
-var user = new User({
-  email: 'test@example.com'
-});
+var user = new User({email: 'test@example.com'});
 user.save()
 .then(function(result) {
   /*
@@ -51,7 +42,8 @@ user.save()
 })
 
 // Find a record by primary key (first column name in model definition)
-User.get(1).then(function(result) {
+User.get(1)
+.then(function(result) {
   /*
   result = {
     id: '1',
