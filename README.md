@@ -25,6 +25,9 @@ $ psql -c "create table users (id bigserial primary key, email text not null, cr
 // Define a model
 var User = acid.Model('users');
 
+// Define a model with a primary key other than id
+var User = acid.Model('users', 'userId');
+
 // Insert a record
 var user = new User({email: 'test@example.com'});
 user.save()
@@ -41,7 +44,7 @@ user.save()
   console.log(error);
 })
 
-// Find a record by primary key (first column name in model definition)
+// Find a record by primary key (id by default)
 User.get(1)
 .then(function(result) {
   /*
