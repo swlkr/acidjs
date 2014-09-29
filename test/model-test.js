@@ -62,6 +62,7 @@ describe('Model', function() {
 
     it('should get a record from the database', function() {
       var User = acid.Model('users');
+      return expect(User.get(1)).to.eventually.include.keys('email');
     });
   });
 
