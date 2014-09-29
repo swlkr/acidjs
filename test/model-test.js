@@ -62,8 +62,23 @@ describe('Model', function() {
 
     it('should get a record from the database', function() {
       var User = acid.Model('users');
-      expect(User.get(1)).to.eventually.include.keys('email');
+    });
+  });
+
+  describe('.where', function() {
+    before(function() {
+      return acid.Query("create table users (id bigserial primary key, email text unique not null, createdAt timestamp without time zone default (now() at time zone 'utc'));").then(function(result) {
+        return acid.Query("insert into users (email) values ('test@test.com'), ('test@example.com'), ('test1@example.com')");
+      });
     });
 
+    after(function() {
+      return acid.Query('drop table users;');
+    });
+
+    it('should retrieve records meeting the given criteria', function() {
+      var User = acid.Model('users');
+      return expect(User.where({email: 'test@test.com'})).to.eventually.have.length(1);
+    });
   });
 });
