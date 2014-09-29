@@ -67,9 +67,11 @@ describe('Model', function() {
   });
 
   describe('.where', function() {
+    var User = acid.Model('users');
+
     before(function() {
-      return acid.Query("create table users (id bigserial primary key, email text unique not null, createdAt timestamp without time zone default (now() at time zone 'utc'));").then(function(result) {
-        return acid.Query("insert into users (email) values ('test@test.com'), ('test@example.com'), ('test1@example.com')");
+      return acid.Query("create table users (id bigserial primary key, email text unique not null, name text, job text, createdAt timestamp without time zone default (now() at time zone 'utc'));").then(function(result) {
+        return acid.Query("insert into users (email, name, job) values ('test@test.com', 'steve', null), ('test@example.com', 'steve', 'software engineer'), ('test1@example.com', 'steve', 'software engineer')");
       });
     });
 
@@ -78,8 +80,11 @@ describe('Model', function() {
     });
 
     it('should retrieve records meeting the given criteria', function() {
-      var User = acid.Model('users');
-      return expect(User.where({email: 'test@test.com'})).to.eventually.have.length(1);
+      return expect(User.where({email: 'test@test.com'}).run()).to.eventually.have.length(1);
     });
+
+    it('should handle method chaining (default is AND query)', function() {
+      return expect(User.where({name: 'steve'}).where({job: 'software engineer'}).run()).to.eventually.have.length(2);
+    })
   });
 });
