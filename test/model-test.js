@@ -80,11 +80,11 @@ describe('Model', function() {
     });
 
     it('should retrieve records meeting the given criteria', function() {
-      return expect(User.where({email: 'test@test.com'}).run()).to.eventually.have.length(1);
+      return expect(User.where('email = ?', 'test@example.com').run()).to.eventually.have.length(1);
     });
 
-    it('should handle method chaining (default is AND query)', function() {
-      return expect(User.where({name: 'steve'}).where({job: 'software engineer'}).run()).to.eventually.have.length(2);
+    it('should handle multiple parameters in the where clause', function() {
+      return expect(User.where('name = ? and job = ?', 'steve', 'software engineer').run()).to.eventually.have.length(2);
     })
   });
 });

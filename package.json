@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "pg": "3.4.2",
-    "q": "1.0.1",
-    "sql-bricks-postgres": "^0.1.0"
+    "psqljs": "0.0.2",
+    "q": "1.0.1"
   },
   "devDependencies": {
     "chai": "^1.9.1",
