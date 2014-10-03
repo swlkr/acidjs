@@ -1,7 +1,7 @@
 # Acid
 _A minimal postgres ORM for nodejs_
 
-Built on top of [pg](https://github.com/brianc/node-postgres) and [sql-bricks](https://github.com/CSNW/sql-bricks)
+Built on top of [pg](https://github.com/brianc/node-postgres) and [psqljs](https://github.com/swlkr/psqljs)
 
 [![Build Status](https://travis-ci.org/swlkr/acid.svg?branch=master)](https://travis-ci.org/swlkr/acid)
 
@@ -53,6 +53,21 @@ User.get(1)
     email: 'test@example.com',
     createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
   }
+  */
+})
+.fail(function(error) {
+  console.log(error);
+})
+
+// Find a record using where
+User.where('email = ?', 'test@example.com').run()
+.then(function(result) {
+  /*
+    result = [{
+      id: '1',
+      email: 'test@example.com',
+      createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
+    }]
   */
 })
 .fail(function(error) {
