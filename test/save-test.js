@@ -30,10 +30,9 @@ describe('Record', function() {
     it('should save an existing record to the database', function() {
       var User = acid.Model('users');
       var user = new User({email: 'update@example.com'});
-      return user.save().then(function(result) {
-        var u = new User(result);
+      return user.save().then(function(u) {
         u.email = 'updated_email@example.com';
-        return expect(u.save()).to.eventually.deep.equal({id: result.id, email: u.email, createdat: result.createdat});
+        return expect(u.save()).to.eventually.have.deep.property('email', u.email);
       });
     });
   });
