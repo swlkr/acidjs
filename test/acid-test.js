@@ -19,13 +19,15 @@ describe('acid', function() {
     });
 
     it('should set the primary key', function() {
-      var model = acid.Model(tableName, 'otherId');
-      expect(model.primaryKey).to.equal('otherId');
+      var Model = acid.Model(tableName, 'otherId');
+      var model = new Model({});
+      expect(model._model._primaryKey).to.equal('otherId');
     });
 
     it('should set the primary key to id by default', function() {
-      var model = acid.Model(tableName);
-      expect(model.primaryKey).to.equal('id');
+      var Model = acid.Model(tableName);
+      var model = new Model({});
+      expect(model._model._primaryKey).to.equal('id');
     });
   });
 });

@@ -8,16 +8,16 @@ var chai = require('chai'),
       database: 'acidjs',
       port: 5432
     }),
-    Model = require('../lib/model');
+    Record = require('../lib/record');
 
 chai.use(chaiAsPromised);
 
 describe('Model', function() {
   describe('.new', function() {
-    it('should return an instance of a model', function() {
+    it('should return an instance of a record', function() {
       var User = acid.Model('users');
       var user = new User({email: 'hello@example.com'});
-      expect(user).to.be.an.instanceof(Model);
+      expect(user).to.be.an.instanceof(Record);
     });
 
     it('should create properties', function() {

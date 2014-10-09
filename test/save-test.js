@@ -7,12 +7,11 @@ var chai = require('chai'),
       password: '',
       database: 'acidjs',
       port: 5432
-    }),
-    Model = require('../lib/model');
+    });
 
 chai.use(chaiAsPromised);
 
-describe('Model', function() {
+describe('Record', function() {
   describe('#save', function() {
     before(function() {
       return acid.Query("create table users (id bigserial primary key, email text unique not null, createdAt timestamp without time zone default (now() at time zone 'utc'));");
@@ -22,10 +21,20 @@ describe('Model', function() {
       return acid.Query('drop table users;');
     });
 
-    it('should save a record to the database', function() {
+    it('should save a new record to the database', function() {
       var User = acid.Model('users');
       var user = new User({email: 'test@test.com'});
       return expect(user.save()).to.eventually.include.keys('id');
+    });
+
+    it('should save an existing record to the database', function() {
+      var User = acid.Model('users');
+      var user = new User({email: 'update@example.com'});
+      return user.save().then(function(result) {
+        var u = new User(result);
+        u.email = 'updated_email@example.com';
+        return expect(u.save()).to.eventually.deep.equal({id: result.id, email: u.email, createdat: result.createdat});
+      });
     });
   });
 });
