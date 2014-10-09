@@ -10,8 +10,6 @@ var chai = require('chai'),
     }),
     Model = require('../lib/model');
 
-chai.use(chaiAsPromised);
-
 describe('Model', function() {
   describe('.define', function() {
     it('should allow the user to define a function', function() {

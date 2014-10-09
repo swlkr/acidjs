@@ -5,8 +5,7 @@ var chai = require('chai'),
       user: 'postgres',
       password: '',
       database: 'acidjs'
-    }),
-    Model = require('../lib/model');
+    });
 
 describe('acid', function() {
   describe('.Model', function() {
