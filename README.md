@@ -80,6 +80,15 @@ User.get(1)
     }
   */
 })
+
+// Delete a record
+User.get(1)
+.then(function(user) {
+  return user.delete();
+})
+.then(function(deleted) {
+  // deleted = true
+});
 ```
 
 ## Tests
