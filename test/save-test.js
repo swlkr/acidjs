@@ -35,5 +35,18 @@ describe('Record', function() {
         return expect(u.save()).to.eventually.have.deep.property('email', u.email);
       });
     });
+
+    it('should handle chained promises', function() {
+      var User = acid.Model('users');
+      var email = 'updated@example.com';
+      var user = new User({email: 'new@example.com'});
+      return user.save().then(function(u) {
+        u.email = email;
+        return u.save();
+      })
+      .then(function(user) {
+        return expect(user).to.have.deep.property('email', email);
+      });
+    });
   });
 });
