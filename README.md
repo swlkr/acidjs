@@ -31,47 +31,54 @@ var User = acid.Model('users', 'userId');
 // Insert a record
 var user = new User({email: 'test@example.com'});
 user.save()
-.then(function(result) {
+.then(function(user) {
   /*
-  result = {
+  user = {
     id: '1',
     email: 'test@example.com',
     createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
   }
   */
-})
-.fail(function(error) {
-  console.log(error);
 })
 
 // Find a record by primary key (id by default)
 User.get(1)
-.then(function(result) {
+.then(function(user) {
   /*
-  result = {
+  user = {
     id: '1',
     email: 'test@example.com',
     createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
   }
   */
 })
-.fail(function(error) {
-  console.log(error);
-})
 
 // Find a record using where
 User.where('email = ?', 'test@example.com').run()
-.then(function(result) {
+.then(function(user) {
   /*
-    result = [{
+    user = [{
       id: '1',
       email: 'test@example.com',
       createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
     }]
   */
 })
-.fail(function(error) {
-  console.log(error);
+
+// Update a record
+User.get(1)
+.then(function(user) {
+  user.name = 'Ryan Dahl';
+  return user.save();
+})
+.then(function(user) {
+  /*
+    user = {
+      id: '1',
+      name: 'Ryan Dahl',
+      createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
+    }
+  */
 })
 ```
 
