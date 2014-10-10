@@ -84,7 +84,7 @@ User.get(1)
 // Delete a record
 User.get(1)
 .then(function(user) {
-  return user.delete();
+  return user.destroy();
 })
 .then(function(deleted) {
   // deleted = true
