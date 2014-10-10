@@ -2,7 +2,7 @@
   "author": "Sean <swlkr.rbl@gmail.com>",
   "name": "acid",
   "description": "SQL ORM",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/swlkr/acid",
   "repository": {
     "type": "git",
