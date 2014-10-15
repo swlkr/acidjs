@@ -5,6 +5,12 @@ Built on top of [pg](https://github.com/brianc/node-postgres) and [psqljs](https
 
 [![Build Status](https://travis-ci.org/swlkr/acid.svg?branch=master)](https://travis-ci.org/swlkr/acid)
 
+## Install
+
+```bash
+$ npm install --save acidjs
+```
+
 ## Examples
 
 ```js
