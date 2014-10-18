@@ -48,5 +48,10 @@ describe('Model', function() {
       var User = acid.Model('users');
       return expect(User.get(1)).to.eventually.include.keys('email');
     });
+
+    it('should return a sane error message when the record does not exist', function() {
+      var User = acid.Model('users');
+      return expect(User.get(2)).to.eventually.deep.equal({});
+    })
   });
 });
