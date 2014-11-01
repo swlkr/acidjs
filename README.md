@@ -15,7 +15,7 @@ $ npm install --save acidjs
 
 ```js
 // Require the module
-var acid = require('acid')({
+var acid = require('acidjs')({
   host: 'localhost',
   user: 'postgres',
   password: '',
