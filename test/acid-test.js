@@ -29,4 +29,18 @@ describe('acid', function() {
       expect(model._model._primaryKey).to.equal('id');
     });
   });
+
+  describe('require()', function() {
+    var str = 'postgres://user:password@host:3456/database';
+
+    it('should handle a connection string', function() {
+      var acidTest = require('../lib/acid')(str);
+      expect(acidTest.ConnectionString()).to.equal(str);
+    });
+
+    it('should handle a json object', function() {
+      var acidTest = require('../lib/acid')({host: 'host', user: 'user', password: 'password', port: '3456', database: 'database'});
+      expect(acidTest.ConnectionString()).to.equal(str);
+    });
+  });
 });
