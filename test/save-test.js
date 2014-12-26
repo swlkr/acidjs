@@ -48,5 +48,12 @@ describe('Record', function() {
         return expect(user).to.have.deep.property('email', email);
       });
     });
+
+    it('should save any newly assigned properties', function() {
+      var User = acid.Model('users');
+      var user = new User({email: 'test1@example.com'});
+      user.email = 'test2@example.com';
+      return expect(user.save()).to.eventually.have.deep.property('email', user.email);
+    });
   });
 });
