@@ -34,21 +34,7 @@ var User = acid.Model('users');
 // Define a model with a primary key other than id
 var User = acid.Model('users', 'userId');
 
-// Define a function or three
-User.define('isAuthenticated', function(pass, success, failure) {
-  bcrypt.compare(pass, this.password, function(err, res) {
-    if(res === true) {
-      success();
-    } else {
-      failure();
-    }
-  });
-});
-
-User.define('isValid', function() {
-  return validator.isEmail(this.email) && this.password && this.password.length >= 7;
-});
-
+// Define a function
 User.define('hashPassword', function() {
   this.password = bcrypt.hashSync(this.password, 7);
 });
@@ -114,6 +100,13 @@ User.get(1)
 .then(function(deleted) {
   // deleted = true
 });
+
+// Validation
+User.column('email', {required: true});
+var user = new User({email: ''});
+if(!user.valid()) {
+  console.log(user.errors); // ['email is invalid']
+}
 ```
 
 ## Tests
