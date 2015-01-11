@@ -13,8 +13,8 @@ chai.use(chaiAsPromised);
 
 describe('Record', function() {
   describe('#valid', function() {
-    it('should check for validity based on column attributes', function() {
-      var User = acid.Model('Users');
+    it('should check for required validity', function() {
+      var User = acid.Model('users');
       User.column('email', { required: true });
       User.column('password', { required: true, length: 7 });
 
@@ -23,8 +23,28 @@ describe('Record', function() {
       return expect(user.valid()).to.equal(false);
     });
 
+    it('should check for length validity', function() {
+      var User = acid.Model('users');
+
+      User.column('password', { required: true, length: 7 });
+
+      var user = new User({password: 'passwor'});
+
+      return expect(user.valid()).to.equal(false);
+    });
+
+    it('should handle a valid length', function() {
+      var User = acid.Model('users');
+
+      User.column('password', { length: 7 });
+
+      var user = new User({password: 'password'});
+
+      return expect(user.valid()).to.equal(true);
+    });
+
     it('should return a default error message', function() {
-      var User = acid.Model('Users');
+      var User = acid.Model('users');
       User.column('email', { required: true });
       User.column('email', { required: true });
       User.column('password', { required: true, length: 7 });
@@ -36,7 +56,7 @@ describe('Record', function() {
     });
 
     it('should return a custom error message', function() {
-      var User = acid.Model('Users');
+      var User = acid.Model('users');
       var invalid = {
         email: 'You need to use an actual email address',
         password: 'Your password needs to be longer than 7 characters'
