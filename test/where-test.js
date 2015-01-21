@@ -32,5 +32,9 @@ describe('Model', function() {
     it('should handle multiple parameters in the where clause', function() {
       return expect(User.where('name = ? and job = ?', 'steve', 'software engineer').run()).to.eventually.have.length(2);
     });
+
+    it('should return an empty array when no results are found', function() {
+      return expect(User.where('email = ?', 'does@notexist.com').run()).to.eventually.have.length(0);
+    });
   });
 });
