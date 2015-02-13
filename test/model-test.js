@@ -44,14 +44,14 @@ describe('Model', function() {
       return acid.Query('drop table users;');
     });
 
-    it('should get a record from the database', function() {
+    it('should get a record from the database with only column names', function() {
       var User = acid.Model('users');
-      return expect(User.get(1)).to.eventually.include.keys('errors');
+      return expect(User.get(1)).to.eventually.include.keys(['errors', 'id', 'email', 'createdat', 'save', 'valid', 'destroy']);
     });
 
     it('should return a sane error message when the record does not exist', function() {
       var User = acid.Model('users');
       return expect(User.get(2)).to.eventually.deep.equal({});
-    })
+    });
   });
 });

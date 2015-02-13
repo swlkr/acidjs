@@ -16,18 +16,6 @@ describe('acid', function() {
       var type = typeof(model);
       expect(type).to.equal('function');
     });
-
-    it('should set the primary key', function() {
-      var Model = acid.Model(tableName, 'otherId');
-      var model = new Model({});
-      expect(model._model._primaryKey).to.equal('otherId');
-    });
-
-    it('should set the primary key to id by default', function() {
-      var Model = acid.Model(tableName);
-      var model = new Model({});
-      expect(model._model._primaryKey).to.equal('id');
-    });
   });
 
   describe('require()', function() {
