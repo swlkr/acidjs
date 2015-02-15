@@ -46,7 +46,7 @@ describe('Model', function() {
 
     it('should get a record from the database with only column names', function() {
       var User = acid.Model('users');
-      return expect(User.get(1)).to.eventually.include.keys(['errors', 'id', 'email', 'createdat', 'save', 'valid', 'destroy']);
+      return expect(User.get(1)).to.eventually.include.keys(['id', 'email', 'createdat', 'save', 'destroy']);
     });
 
     it('should return a sane error message when the record does not exist', function() {
