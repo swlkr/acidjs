@@ -1,34 +1,62 @@
-var chai = require('chai'),
+var chai = require("chai"),
     expect = chai.expect,
-    acid = require('../lib/acid')({
-      host: 'localhost',
-      user: 'postgres',
-      password: '',
-      database: 'acidjs'
-    });
+    chaiAsPromised = require("chai-as-promised"),
+    database = require("../lib/acid")("postgres://postgres:@localhost:5432/acidjs");
 
-describe('acid', function() {
-  describe('.Model', function() {
-    var tableName = 'tableName';
-    var model = acid.Model(tableName);
+    chai.use(chaiAsPromised);
 
-    it('should return a function', function() {
-      var type = typeof(model);
-      expect(type).to.equal('function');
+describe("database", function() {
+  before(function() {
+    return database.sql("create table users (name text)");
+  });
+
+  after(function() {
+    return database.sql("drop table users;");
+  });
+
+  describe(".insert", function() {
+    it("should insert a record into the database", function() {
+      return expect(
+              database.insert("users", {name: "test"})
+             ).to.eventually.deep.equal([{name: "test"}]);
     });
   });
 
-  describe('require()', function() {
-    var str = 'postgres://user:password@host:3456/database';
-
-    it('should handle a connection string', function() {
-      var acidTest = require('../lib/acid')(str);
-      expect(acidTest.ConnectionString()).to.equal(str);
+  describe(".where", function() {
+    before(function() {
+      return database.insert("users", {name: "some user"});
     });
 
-    it('should handle a json object', function() {
-      var acidTest = require('../lib/acid')({host: 'host', user: 'user', password: 'password', port: '3456', database: 'database'});
-      expect(acidTest.ConnectionString()).to.equal(str);
+    it("should retrieve a record from the database", function() {
+      return expect(
+              database.where("users", "name = $1", "some user")
+             ).to.eventually.deep.equal([{name: "some user"}]);
     });
   });
+
+  describe(".update", function() {
+    before(function() {
+      return database.insert("users", {name: "update me"});
+    });
+
+    it("should update a record in the database", function() {
+      return expect(
+              database.update("users", {name: "updated"}, "name = $2", "update me")
+             ).to.eventually.deep.equal([{name: "updated"}]);
+    });
+  });
+
+  describe(".delete", function() {
+    before(function() {
+      return database.insert("users", {name: "delete me"});
+    });
+
+    it("should delete a record from the database", function() {
+      return expect(
+              database.delete("users", "name = $1", "delete me")
+             ).to.eventually.deep.equal([]);
+    });
+  });
+
+
 });
