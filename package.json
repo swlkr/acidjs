@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "pg": "3.4.2",
-    "psqljs": "0.0.4",
+    "psqljs": "0.0.6",
     "q": "1.0.1"
   },
   "devDependencies": {
