@@ -1,5 +1,5 @@
-# Acid
-_A minimal postgres ORM for nodejs_
+# acid.js
+_A simple postgres library_
 
 Built on top of [pg](https://github.com/brianc/node-postgres) and [psqljs](https://github.com/swlkr/psqljs)
 
@@ -15,98 +15,74 @@ $ npm install --save acidjs
 
 ```js
 // Require the module
-var acid = require('acidjs')({
-  host: 'localhost',
-  user: 'postgres',
-  password: '',
-  database: 'acidjs',
-  port: 5432
-});
+var acid = require("acidjs")("postgres://postgres:@localhost:5432/database");
 ```
+## Create a table
 ```bash
-# Create a table
-$ psql -c "create table users (id bigserial primary key, email text not null, createdAt timestamp without time zone default (now() at time zone 'utc'));"
+$ psql -c "create table users (id bigserial primary key, email text not null, created_at timestamp without time zone default (now() at time zone "utc"));"
 ```
+
+## Insert a record
 ```js
-// Define a model
-var User = acid.Model('users');
+var tables = {
+  users: "users"
+};
 
-// Define a model with a primary key other than id
-var User = acid.Model('users', 'userId');
-
-// Define a function
-User.define('hashPassword', function() {
-  this.password = bcrypt.hashSync(this.password, 7);
+acid
+.insert(tables.users, {email: "test@example.com"});
+.then(function(rows) {
+  /*
+    rows === [
+      {
+        id: "1",
+        email: "test@example.com",
+        created_at: ...
+      }
+    ]
+  */
 });
+```
 
-// Insert a record
-var user = new User({email: 'test@example.com'});
-user.save()
-.then(function(user) {
+## Find a record with a where clause
+```js
+acid
+.where(tables.users, "id = $1", "1")
+.then(function(rows) {
   /*
-  user = {
-    id: '1',
-    email: 'test@example.com',
-    createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
-  }
+    rows === [
+      {
+        id: "1",
+        email: "test@example.com",
+        created_at: ...
+      }
+    ]
   */
-})
-
-// Find a record by primary key (id by default)
-User.get(1)
-.then(function(user) {
-  /*
-  user = {
-    id: '1',
-    email: 'test@example.com',
-    createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
-  }
-  */
-})
-
-// Find a record using where
-User.where('email = ?', 'test@example.com').run()
-.then(function(user) {
-  /*
-    user = [{
-      id: '1',
-      email: 'test@example.com',
-      createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
-    }]
-  */
-})
-
-// Update a record
-User.get(1)
-.then(function(user) {
-  user.name = 'Ryan Dahl';
-  return user.save();
-})
-.then(function(user) {
-  /*
-    user = {
-      id: '1',
-      name: 'Ryan Dahl',
-      createdat: Sun Sep 14 2014 23:03:13 GMT-0700 (PDT)
-    }
-  */
-})
-
-// Delete a record
-User.get(1)
-.then(function(user) {
-  return user.destroy();
-})
-.then(function(deleted) {
-  // deleted = true
 });
+```
+## Update a record
+```js
+acid
+.update(tables.users, {name: "Ryan Dahl"}, "id = $1", "1")
+.then(function(rows) {
+  /*
+    rows === [
+      {
+        id: "1",
+        name: "Ryan Dahl",
+        created_at: ...
+      }
+    ]
+  */
+})
+```
 
-// Validation
-User.column('email', {required: true});
-var user = new User({email: ''});
-if(!user.valid()) {
-  console.log(user.errors); // ['email is invalid']
-}
+## Delete a record
+```js
+acid
+.delete(tables.users, "id = $1", "1")
+.then(function(rows) {
+  // rows == []
+});
 ```
 
 ## Tests
@@ -116,5 +92,5 @@ if(!user.valid()) {
 $ psql -c "create user postgres createdb;"
 $ psql -c "create database postgres;"
 $ psql -c "create database acidjs;" -U postgres
-$ make test
+$ npm test
 ```
