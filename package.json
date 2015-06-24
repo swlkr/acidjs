@@ -2,7 +2,7 @@
   "author": "Sean <swlkr.rbl@gmail.com>",
   "name": "acidjs",
   "description": "A simple postgres library",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/swlkr/acid",
   "repository": {
     "type": "git",
