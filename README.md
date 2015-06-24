@@ -85,6 +85,21 @@ acid
 });
 ```
 
+## Run arbitrary sql
+```js
+acid
+.sql("select * from user_defined_function($1)", ["value"])
+.then(function(rows) {
+  /*
+    rows === [
+      {
+        ... whatever data
+      }
+    ]
+  */
+})
+```
+
 ## Tests
 
 ```bash
