@@ -13,17 +13,18 @@
     "test": "NODE_ENV=test ./node_modules/.bin/mocha"
   },
   "engines": {
-    "node": "*"
+    "node": "0.12.x"
   },
   "dependencies": {
-    "pg": "3.4.2",
     "psqljs": "0.0.6",
     "q": "1.0.1"
+  },
+  "peerDependencies": {
+    "pg": "4.x"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
-    "jshint": "*",
     "mocha": "*",
     "should": "*"
   }
