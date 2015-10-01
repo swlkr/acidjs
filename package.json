@@ -12,9 +12,6 @@
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha"
   },
-  "engines": {
-    "node": "0.12.x"
-  },
   "dependencies": {
     "psqljs": "0.0.6",
     "q": "1.0.1"
